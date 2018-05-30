@@ -1,6 +1,6 @@
 package ca.dal.password_validator;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -16,8 +16,8 @@ public class ValidatorUnitTest {
 
     static Validator validator;
 
-    @BeforeClass
-    public static void setup()
+    @Before
+    public void setup()
     {
         validator = new Validator();
     }
@@ -27,6 +27,7 @@ public class ValidatorUnitTest {
     {
         //return false because it is "password"
         assertFalse(validator.validate(WeakPassword1));
+        assertEquals("\nMust no be \"password\"  (case insensitive)\nMust have at least one uppercase character\nMust have at least one digit\nMust have at least one special character", validator.printMessage());
     }
 
     @Test
@@ -34,6 +35,8 @@ public class ValidatorUnitTest {
     {
         //return false because it is "password" in uppercase
         assertFalse(validator.validate(WeakPassword2));
+        assertEquals("\nMust no be \"password\"  (case insensitive)\nMust have at least one lowercase character\nMust have at least one digit\nMust have at least one special character", validator.printMessage());
+
     }
 
     @Test
@@ -41,6 +44,7 @@ public class ValidatorUnitTest {
     {
         //return false because it is too short, minimum 8 characters
         assertFalse(validator.validate(WeakPassword3));
+        assertEquals("\nMust have at least 8 characters", validator.printMessage());
     }
 
     @Test
@@ -48,6 +52,8 @@ public class ValidatorUnitTest {
     {
         //return false because uppercase characters is required
         assertFalse(validator.validate(WeakPassword4));
+        assertEquals("\nMust have at least one uppercase character", validator.printMessage());
+
     }
 
     @Test
@@ -55,6 +61,7 @@ public class ValidatorUnitTest {
     {
         //return false because lowercase characters is required
         assertFalse(validator.validate(WeakPassword5));
+        assertEquals("\nMust have at least one lowercase character", validator.printMessage());
     }
 
     @Test
@@ -62,6 +69,7 @@ public class ValidatorUnitTest {
     {
         //return false because at least one digit is required
         assertFalse(validator.validate(WeakPassword6));
+        assertEquals("\nMust have at least one digit", validator.printMessage());
     }
 
     @Test
@@ -69,6 +77,7 @@ public class ValidatorUnitTest {
     {
         //return false because at least one special character is required
         assertFalse(validator.validate(WeakPassword7));
+        assertEquals("\nMust have at least one special character", validator.printMessage());
     }
 
     @Test
@@ -76,5 +85,7 @@ public class ValidatorUnitTest {
     {
         //return true because it meet the requirement
         assertTrue(validator.validate(StrongPassword));
+        assertEquals("", validator.printMessage());
+
     }
 }
